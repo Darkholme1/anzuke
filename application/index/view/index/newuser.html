@@ -1,0 +1,294 @@
+<!-- 注册登录界面 -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="__ROOT__/static/img/logo.png" type="image/x-icon" />
+    <title>注册登录</title>
+    <!-- Bootstrap jQuery -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="__CSS__/base.css">
+    <link rel="stylesheet" href="__CSS__/newuser.css">
+</head>
+
+<body style="width:100%;height: 100%;background-size: 100%;background: url('__ROOT__/static/img/log_reg_bg.jpg') no-repeat fixed center;">
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-default" role="navigation">
+        <a class="navbar-brand" href="{$home_url}">
+            <img src="__ROOT__/static/img/logo.png" style="width:50px;display: inline-block" alt="安租客" class="a_logo">
+            <span class="a_logo">安租客</span>
+        </a>
+    </nav>
+    <div class="container">
+        <!-- 注册登录框 -->
+        <div class="panel panel-default center-block" id="form_log_reg">
+            <div class="panel-body" id="panel_body">
+                <p id="log_anzuke">登录安租客</p>
+                <hr id="log_hr">
+                <div class="log_reg" style="text-align: center;margin-bottom: 10px;">
+                    <a class="a_log_reg" href="{$reg_url}" id="item1">快捷注册</a>
+                    <hr id="divide" style="margin-left: 75px;margin-right: 75px;">
+                    <a class="a_log_reg" href="{$log_url}" id="item2">账号密码登录</a>
+                </div>
+                <!-- 注册表单 -->
+                <!-- <form action="" class="form-horizontal center-block form_lr" role="form" id="form_reg">
+                    <span class="info" id="info_phone">　</span>
+                    <div class="wrap1" id="phone_div">
+                        <i class="fa fa-mobile phone"></i>
+                        <hr class="split">
+                        <input type="text" class="text" placeholder="请输入手机号码" name="phone" id="phone">
+                    </div>
+                    <span class="info" id="info_password1">　</span>
+                    <div class="wrap1" id="password_div">
+                        <i class="fa fa-lock lock"></i>
+                        <hr class="split">
+                        <input type="password" name="password1" id="password1" class="text" placeholder="请输入密码" >
+                    </div>
+                    <span class="info" id="info_password2">　</span>
+                    <div class="wrap1" id="passconf_div">
+                        <i class="fa fa-check check"></i>
+                        <hr class="split">
+                        <input type="password" name="password2" id="password2" class="text" placeholder="请确认密码">
+                    </div>
+                    <span class="info" id="info_captcha">　</span>
+                    <div class="wrap1" id="captcha_div">
+                        <input type="text" id="captcha" class="text" name="captcha" placeholder="请输入验证码">
+                        <img id="verify_img" src="{:captcha_src()}" alt="验证码" onclick="this.src=this.src+'?'">
+                    </div>
+                    <input class="submit-btn" id="btn_reg" type="button" value="立即注册">
+                </form> -->
+                <!-- 登录表单 -->
+                <!-- <form action="" class="form-horizontal center-block form_lr" role="form" id="form_log">
+                    <div class="wrap1">
+                        <i class="fa fa-user user"></i>
+                        <hr class="split">
+                        <input type="text" class="text" id="username" name="username" placeholder="请输入用户名/手机号码">
+                    </div>
+                    <div class="wrap1">
+                        <i class="fa fa-lock lock"></i>
+                        <hr class="split">
+                        <input type="password" id="password" name="password" class="text" placeholder="请输入密码">
+                    </div>
+                    <div class="wrap1" id="captcha_div">
+                        <input type="text" id="captcha" class="text" name="captcha" placeholder="请输入验证码">
+                        <img id="verify_img" src="{:captcha_src()}" alt="验证码" onclick="this.src=this.src+'?'">
+                    </div>
+                    <input class="submit-btn" id="btn_log" type="button" value="立即登录">
+                </form> -->
+            </div>
+        </div>
+    </div>
+
+</body>
+<script>
+    $("#item{$id}").addClass("a_active");
+    var id = {$id};
+    var form_reg = '<form action="" class="form-horizontal center-block form_lr" role="form" id="form_reg" method="post">\
+                    <span class="info" id="info_phone">　</span><!--提示信息-->\
+                    <div class="wrap1" id="phone_div">\
+                        <i class="fa fa-mobile phone"></i>\
+                        <hr class="split">\
+                        <input type="text" class="text" placeholder="请输入手机号码" name="phone" id="phone">\
+                    </div>\
+                    <span class="info" id="info_password1">　</span>\
+                    <div class="wrap1" id="password1_div">\
+                        <i class="fa fa-lock lock"></i>\
+                        <hr class="split">\
+                        <input type="password" name="password1" id="password1" class="text" placeholder="请输入密码" >\
+                    </div>\
+                    <span class="info" id="info_password2">　</span>\
+                    <div class="wrap1" id="password2_div">\
+                        <i class="fa fa-check check"></i>\
+                        <hr class="split">\
+                        <input type="password" name="password2" id="password2" class="text" placeholder="请确认密码">\
+                    </div>\
+                    <span class="info" id="info_captcha">　</span>\
+                    <div class="wrap1" id="captcha_div">\
+                        <input type="text" id="captcha" class="text" name="captcha" placeholder="请输入验证码">\
+                        <img id="verify_img" src="{:captcha_src()}" alt="验证码" onclick="this.src=this.src+\'?\'">\
+                    </div>\
+                    <input class="submit-btn" id="btn_reg" type="button" value="立即注册"\
+                </form>';
+    var form_log = '<form action="" class="form-horizontal center-block form_lr" role="form" id="form_log" method="post">\
+                    <span class="info" id="info_username">　</span>\
+                    <div class="wrap1" id="username_div">\
+                        <i class="fa fa-user user"></i>\
+                        <hr class="split">\
+                        <input type="text" class="text" id="username" name="username" placeholder="请输入用户名/手机号码">\
+                    </div>\
+                    <span class="info" id="info_password">　</span>\
+                    <div class="wrap1" id="password_div">\
+                        <i class="fa fa-lock lock"></i>\
+                        <hr class="split">\
+                        <input type="password" id="password" name="password" class="text" placeholder="请输入密码">\
+                    </div>\
+                    <span class="info" id="info_captcha">　</span>\
+                    <div class="wrap1" id="captcha_div">\
+                        <input type="text" id="captcha" class="text" name="captcha" placeholder="请输入验证码">\
+                        <img id="verify_img" src="{:captcha_src()}" alt="验证码" onclick="this.src=this.src+\'?\'">\
+                    </div>\
+                    <input class="submit-btn" id="btn_log" type="button" value="立即登录">\
+                </form>';
+    if (id == 1) {
+        // $("#form_log").remove();
+        $(form_reg).appendTo("#panel_body");
+    }
+    else {
+        // $("#form_reg").remove();
+        $(form_log).appendTo("#panel_body");
+    }
+    var submit_reg = 0;
+    var submit_log = 0;
+    $(".text").blur(function () {
+        //判断空
+        if ($(this).val() == "") {
+            $(this).parent().css("border-color", "#e39595");//改变边框颜色
+            switch ($(this).parent().attr("id")) {
+                case "phone_div":
+                    $("#info_phone").text("请输入手机号码");
+                    break;
+                case "password1_div":
+                    $("#info_password1").text("请输入密码");
+                    break;
+                case "password2_div":
+                    $("#info_password2").text("请再次输入密码");
+                    break;
+                case "captcha_div":
+                    $("#info_captcha").text("请输入验证码");
+                    break;
+                case "username_div":
+                    $("#info_username").text("请输入用户名");
+                    break;
+                case "password_div":
+                    $("#info_password").text("请输入密码");
+                    break;
+                default:
+                    break;
+            }
+
+        }
+        /*注册判断*/
+        //判断手机号是否合法
+        else if ($(this).attr("id") == "phone") {
+            var reg = /\b\d{11}\b/;//手机号码正则表达式
+            if (reg.test($("#phone").val()) == false) {
+                $(this).parent().css("border-color", "#e39595");
+                $("#info_phone").text("请输入正确的手机号码");
+            } else {
+                $(this).parent().css("border-color", "");
+                $("#info_phone").text("　");
+            }
+
+        }
+        //判断密码是否符合要求
+        else if ($(this).attr("id") == "password1") {
+            var reg = /\b\w{6,16}\b/;//密码正则表达式
+            if (reg.test($("#password1").val()) == false) {
+                $(this).parent().css("border-color", "#e39595");
+                $("#info_password1").text("密码只能输入字母、数字、下划线，且保持在6~16位");
+            } else {
+                $(this).parent().css("border-color", "");
+                $("#info_password1").text("　");
+            }
+        }
+        //判断密码是否一致
+        else if ($(this).attr("id") == "password2") {
+            if ($(this).val() != $("#password1").val()) {
+                $(this).parent().css("border-color", "#e39595");
+                $("#info_password2").text("密码不一致");
+            } else {
+                $(this).parent().css("border-color", "");
+                $("#info_password2").text("　");
+            }
+        }
+        //判断验证码是否输入
+        else if ($(this).attr("id") == "captcha") {
+            if ($("#captcha").val() != "") {
+                $(this).parent().css("border-color", "");
+                $("#info_captcha").text("　");
+            }
+        }
+        /*登录判断*/
+        //用户名
+        else if($(this).attr("id")=="username"){
+            if($("#username").val()!=""){
+                $(this).parent().css("border-color", "");
+                $("#info_username").text("　");
+            }
+        }
+        //登录密码
+        else if($(this).attr("id")=="password"){
+            if($("#password").val()!=""){
+                $(this).parent().css("border-color", "");
+                $("#info_password").text("　");
+            }
+        }
+        //如果所有输入都符合要求，注册表单可提交
+        if ($(".info").text() == "　　　　") {
+            submit_reg = 1;
+        }
+        //如果所有输入都符合要求，登录表单可提交
+        else if ($(".info").text() == "　　　") {
+            submit_log = 1;
+        }
+    })
+    $("#btn_reg").click(function () {
+        if (submit_reg == 0) {
+            $(".text").blur();//触发失去焦点事件以显示提示信息
+        } else if (submit_reg == 1) {
+            $("#form_reg").submit();
+        }
+    })
+    $("#btn_log").click(function () {
+        if (submit_log == 0) {
+            $(".text").blur();
+        } else if (submit_log == 1) {
+            $("#form_log").submit();
+        }
+    })
+
+    var phone_input = "{$phone_input}";//手机号输入历史
+    var username_input = "{$username_input}";//用户名输入历史
+
+    var captcha_error = {$captcha_error};
+    if(captcha_error==1){
+        if(id==1){
+            $("#captcha_div").css("border-color", "#e39595");
+            $("#info_captcha").text("验证码错误");
+            $("#phone").val(phone_input);
+        }else if(id==2){
+            $("#captcha_div").css("border-color", "#e39595");
+            $("#info_captcha").text("验证码错误");
+            $("#username").val(username_input);
+        }
+        
+    }
+    var reg_error = {$reg_error};
+    if(reg_error==1){
+        $("#phone_div").css("border-color", "#e39595");
+        $("#info_phone").text("该手机号码已注册");
+        $("#phone").val(phone_input);
+    }
+    var log_error = {$log_error};
+    if(log_error==1){
+        $("#username_div").css("border-color", "#e39595");
+        $("#password_div").css("border-color", "#e39595");
+        $("#info_username").text("用户名或密码错误");
+        $("#username").val(username_input);
+    }
+    if(log_error==2){
+        $("#username_div").css("border-color", "#e39595");
+        $("#info_username").text("用户名不存在");
+        $("#username").val(username_input);
+    }
+</script>
+
+</html>

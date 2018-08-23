@@ -1,0 +1,63 @@
+{extend name='common/personal_center' /} {block name='user_sell'}
+<div class="right_nav">
+    <ul class="tab_list">
+        <li>
+            <a class="cur" href="javascript:">房屋信息</a>
+        </li>
+    </ul>
+    <div class="add_message">
+        <a href="{$sell_info}">
+            <i class="fa fa-plus" aria-hidden="true"></i>添加房源</a>
+    </div>
+    <div class="sented">
+        <h2 class="sented_title">发布的房源：</h2>
+        <div class="sented_list">
+            {foreach $rs as $row}
+            <div class="one_sell" id="one_sell{$row->id}">
+                <div class="photo_div">
+                    <img src="__ROOT__/uploads/null.png" alt="" class="photo" id="photo{$row->id}">
+                </div>
+                {foreach $rs_photo as $row_photo} {if condition='$row_photo->sell_id==$row->id'}
+                <script>
+                    $("#photo{$row->id}").attr("src", "__ROOT__/uploads/{$row_photo->time}/{$row_photo->file}")
+                </script> {/if} {/foreach}
+                <div class="one_sell_info">
+
+                    <a href="{$house_details}?id={$row->id}" class="one_sell_info_title">
+                        {if condition="$row->content==null"} {$row->address} {else /} {$row->content} {/if}
+                    </a>
+                    <p class="one_sell_info_details">
+                        <i></i>
+                        <i class="fa fa-columns icon1" aria-hidden="true"></i>
+                        <span>{$row->room}室{$row->hall}厅</span> |
+                        <span>{$row->area}平米</span> |
+                        <span>{$row->floor}/{$row->tall}层</span>
+
+                        <span class="fa fa-user-o"></span>{$row->seller}
+
+                    </p>
+                    <p class="one_sell_info_address">
+                        <i class="fa fa-building-o icon2" aria-hidden="true"></i>
+                        <span>{$row->address}</span>
+                    </p>
+                    <p class="one_sell_info_date">
+                        <i class="fa fa-eye icon3" aria-hidden="true"></i>
+                        <span>{$row->create_time}</span>
+                    </p>
+                </div>
+                <a class="delete_btn" href="?id={$row->id}"><i class="fa fa-times" aria-hidden="true"></i>删除</a>
+                <div class="price">
+                    <h1>
+                        <b>{$row->price}</b>
+                        <span class="yuanyue">元/月</span>
+                    </h1>
+                </div>
+            </div>
+            {/foreach}
+        </div>
+    </div>
+</div>
+{/block} {block name='script'}
+<script>
+    $("#item2").addClass("left_active");
+</script> {/block}

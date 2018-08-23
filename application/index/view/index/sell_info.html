@@ -1,0 +1,175 @@
+{extend name='common/personal_center' /} {block name='user_sell'}
+<div class="right_nav">
+    <ul class="tab_list">
+        <li>
+            <a class="cur" id="cur1" href="{$user_sell}">房屋信息</a>
+        </li>
+        <li>
+            <a class="cur" href="">添加房源</a>
+        </li>
+    </ul>
+    <form action="{$user_sell}" id="form" method="post" enctype="multipart/form-data">
+        <ul class="item_list">
+            <li class="int_item">
+                <label>
+                    <i>*</i>位置</label>
+                <input type="text" name="xq_name" class="int_text txt txt1" placeholder="请输入位置">
+                <div class="err_msg err_msg1">请输入位置</div>
+            </li>
+            <li class="int_item">
+                <label>
+                    <i>*</i>楼栋</label>
+                <input type="text" name="building" class="int_text min_text txt txt2" placeholder="必填">
+                <span class="item_txt padding_rt">栋（号）</span>
+                <input type="text" name="unit" class="int_text min_text" placeholder="选填">
+                <span class="item_txt">单元</span>
+                <div class="err_msg err_msg2">请输入您的楼栋号</div>
+            </li>
+            <li class="int_item">
+                <label>
+                    <i>*</i>面积</label>
+                <input type="text" name="area" class="int_text middle_text txt txt3" placeholder="请输入面积">
+                <span class="item_txt">㎡</span>
+                <div class="err_msg err_msg3">请填写面积</div>
+            </li>
+            <li class="int_item">
+                <label>
+                    <i>*</i>户型</label>
+                <input type="text" name="room" class="int_text min_text txt txt4">
+                <span class="item_txt padding_rt">室</span>
+                <input type="text" name="hall" class="int_text min_text txt txt5">
+                <span class="item_txt padding_rt">厅</span>
+                <input type="text" name="wash" class="int_text min_text txt txt6">
+                <span class="item_txt">卫</span>
+                <div class="err_msg err_msg4">请输入户型</div>
+            </li>
+            <li class="int_item">
+                <label>
+                    <i>*</i>租价</label>
+                <input type="text" name="price" autocomplete="off" class="int_text middle_text txt txt7" placeholder="请输入您的租价">
+                <span class="item_txt">元/月</span>
+                <div class="err_msg err_msg5">请填写租价</div>
+            </li>
+            <li class="int_item">
+                <label>
+                    <i>*</i>楼型</label>
+                <input type="text" name="myfloor" class="int_text min_text txt txt8">
+                <span class="item_txt">层/共</span>
+                <input type="text" name="allfloor" class="int_text min_text txt txt9">
+                <span class="item_txt padding_rt">层</span>
+                <div class="err_msg err_msg6">请输入户型</div>
+            </li>
+            <li class="int_item">
+                <label>
+                    <i>*</i>类型</label>
+                <div class="form-group seop">
+                    <select class="form-control" name="zhuangxiu">
+                        <option value="装修">装修</option>
+                        <option value="普通装修">普通装修</option>
+                        <option value="精装修">精装修</option>
+                        <option value="豪华装修">豪华装修</option>
+                    </select>
+                </div>
+            </li>
+            <li class="int_item hourse_intro">
+                <label>房屋介绍</label>
+                <textarea cols="30" rows="10" name="hourse-intro" class="int_area" placeholder="让顾客更好了解您的房子（选填），请输入0-50字"></textarea>
+            </li>
+            <li class="int_item">
+                <label>房源图</label>
+                <span class="tip">更好展示您的房源（选填）</span>
+                <!-- 选择文件 -->
+
+            </li>
+            <div style="width: 450px;position: relative;left:70px;bottom:25px;margin-bottom: 30px;">
+
+                <div id="inputBox">
+                    <input type="file" name="photo[]" title="请选择图片" id="file" multiple accept="image/*" />点击选择图片
+                </div>
+                <div id="imgBox"></div>
+
+            </div>
+            <li class="int_item">
+                <label>
+                    <i>*</i>称呼</label>
+                <input type="text" name="seller" class="int_text txt txt10" placeholder="请输入您的称呼">
+                <div class="err_msg err_msg7">请输入您的称呼，如：李先生</div>
+            </li>
+            <li class="int_item">
+                <label>
+                    <i>*</i>手机号码</label>
+                <input type="text" name="phone" class="int_text txt txt11" placeholder="">
+                <div class="err_msg err_msg8">请输入您的手机号码</div>
+            </li>
+            <li class="int_item">
+                <a href="javascript:" class="submit-btn" id="submit-btn">立即委托</a>
+            </li>
+        </ul>
+    </form>
+</div>
+{/block} {block name='script'}
+<script src="__JS__/uploadImg.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    imgUpload({
+        inputId: 'file', //input框id
+        imgBox: 'imgBox', //图片容器id
+        buttonId: 'btn', //提交按钮id
+        upUrl: 'php/imgFile.php',  //提交地址
+        data: 'file1', //参数名
+        num: "8"//上传个数
+    })
+    $("#item2").addClass("left_active");
+    $('#cur1').removeClass('cur').addClass('ncur');
+    var submit_check = 0;
+    // for(var i=1;i<=11;i++) {
+    //     $('.txt'+i).blur(function () {
+    //         if($(this).val()=="") {
+    //             $(this).css('border','red solid 1px');
+    //             $(this).siblings('.err_msg').css('display','block');
+    //         }else if ($(this).val()==1) {
+    //             $(this).css('border','#d8d8d8 solid 1px');
+    //             $(this).siblings('.err_msg').css('display','none'); 
+    //         }
+    //     });
+    // }
+
+    $('#submit-btn').click(function () {
+        if (submit_check == 1) {
+            $('#form').submit();
+        } else if (submit_check == 0) {
+            if ($('.txt1').val() != '' &&
+                $('.txt2').val() != '' &&
+                $('.txt3').val() != '' &&
+                $('.txt4').val() != '' &&
+                $('.txt5').val() != '' &&
+                $('.txt6').val() != '' &&
+                $('.txt7').val() != '' &&
+                $('.txt8').val() != '' &&
+                $('.txt9').val() != '' &&
+                $('.txt10').val() != '' &&
+                $('.txt11').val() != '') {
+                $('#form').submit();
+            }else {
+                $('.txt').blur();
+            }
+        }
+    })
+    $('.txt').blur(function () {
+        if ($(this).val() == "") {
+            $(this).css('border', 'red solid 1px');
+            $(this).siblings('.err_msg').css('display', 'block');
+        } else if ($(this).val() != "") {
+            $(this).css('border', '#d8d8d8 solid 1px');
+            $(this).siblings('.err_msg').css('display', 'none');
+        }
+    })
+    $('.txt').keyup(function () {
+        if ($(this).val() == "") {
+            $(this).css('border', 'red solid 1px');
+            $(this).siblings('.err_msg').css('display', 'block');
+        } else if ($(this).val() != "") {
+            $(this).css('border', '#d8d8d8 solid 1px');
+            $(this).siblings('.err_msg').css('display', 'none');
+        }
+    });
+</script> {/block}

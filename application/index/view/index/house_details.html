@@ -1,0 +1,223 @@
+{extend name='common/base' /} {block name='title'}安租客{/block} {block name='navright'}
+<li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <span class="fa fa-user-circle"></span> {$user}
+        <b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu">
+        <li>
+            <a href="{$personal_center}">个人中心</a>
+        </li>
+        <li class="divider"></li>
+        <li>
+            <a href="{$logout}">退出</a>
+        </li>
+    </ul>
+</li>
+{/block} {block name='form_search'}{/block} {block name='house_details'}
+<div>
+    <h3 style="display: inline-block">
+        <b>{$rs->content}</b>
+    </h3>
+    {if condition="$count==0"}
+    <a href="?id={$id}&collect=0" class="btn btn-default collect" style="color:gray;"><span class="fa fa-heart-o"></span> 收藏</a>
+    {else /}
+    <a href="?id={$id}&collect=1" class="btn btn-default collect" style="color:#f60"><span class="fa fa-heart"></span> 取消收藏</a>
+    {/if}
+</div>
+<div class="title2">
+    <div class="title2_price">
+        <b>{$rs->price}</b>元/月</div>
+    <div class="title2_room">
+        <span>{$rs->room}</span>室
+        <span>{$rs->hall}</span>厅</div>
+    <div class="title2_area">
+        <span>{$rs->area}</span>平方米</div>
+</div>
+<div class="photo_seller">
+    <div class="picture-show">
+        <div class="big-picture" id="big-picture">
+            {if condition="$rs_photo!=null"} {foreach $rs_photo as $row}
+            <a class="bigshow" href="javascript:" style="display: none">
+                <img src="__ROOT__/uploads/{$row->time}/{$row->file}" alt="" height="405px" width="540px">
+            </a>
+            {/foreach} {else /}
+            <a href="javascript:" class="bigshow">
+                <img src="__ROOT__/uploads/null.png" alt="" height="405px" width="540px">
+            </a>
+            {/if}
+        </div>
+        <div class="small-picture">
+            <div class="small-prev" id="small-prev">
+                <i class="glyphicon glyphicon-chevron-left"></i>
+            </div>
+            <div class="small-con">
+                <ul id="ul">
+                    {if condition="$rs_photo!=null"} {foreach $rs_photo as $row}
+                    <li>
+                        <p>
+                            <img src="__ROOT__/uploads/{$row->time}/{$row->file}" alt="">
+                        </p>
+                    </li>
+                    {/foreach} {else /}
+                    <li>
+                        <p>
+                            <img src="__ROOT__/uploads/null.png" alt="">
+                        </p>
+                    </li>
+                    {/if}
+                </ul>
+            </div>
+            <div class="small-next" id="small-next">
+                <i class="glyphicon glyphicon-chevron-right"></i>
+            </div>
+
+        </div>
+    </div>
+    <div class="panel panel-default seller">
+        <div class="panel-body">
+            <img src="__ROOT__/uploads/seller.png" alt="房东" style="width: 150px;margin-left: 110px;margin-top: 80px">
+            <h3 style="text-align: center;">{$rs->seller}</h3>
+            <div id="btn_phone">
+                <span class="fa fa-mobile" id="icon_phone"></span>
+                <span id="phone_number">点击查看电话</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="details">
+    <div class="details_title">
+        <h4>房屋信息</h4>
+        <span id="send_time">发布时间：{$rs->create_time}</span>
+    </div>
+    <div class="details_main">
+        <div class="details1">
+            <span>楼栋：{$rs->building}</span>
+            <span>户型：{$rs->room}室{$rs->hall}厅{$rs->wash}卫</span>
+            <span>面积：{$rs->area}平方米</span>
+        </div>
+        <div class="details2">
+            <span>单元：{$rs->unit}</span>
+            <span>楼层：{$rs->floor}（共{$rs->tall}层）</span>
+            <span>装修：{$rs->type}</span>
+        </div>
+        <div style="margin-top: 20px;">
+            <b>位置：{$rs->address}</b>
+        </div>
+    </div>
+</div>
+{/block} {block name='js'}
+<script>
+    $("#big-picture").children("a:first-child").show();
+    $("#ul").children("li:first-child").addClass("cur");
+    $("#btn_phone").click(function () {
+        $("#phone_number").text("{$rs->phone}");
+    })
+    window.onload = function () {
+        var oul = document.getElementById('ul');
+        var ali = oul.getElementsByTagName('li');
+        var bigp = document.getElementById('big-picture');
+        var aa = bigp.getElementsByTagName('a');
+
+        //点击显示大图，并且显示小图焦点
+        for (var i = 0; i < ali.length; i++) {
+            ali[i].value = i;
+            ali[i].onclick = function () {
+                for (var j = 0; j < ali.length; j++) {
+                    ali[j].className = '';
+                    aa[j].style.display = 'none';
+                    //startMove(aa[j],'opacity',0,9); 
+                    aa[j].style.opacity = '0';                               //大图显影
+                }
+                ali[this.value].className = 'cur';
+                aa[this.value].style.display = 'block';
+                startMove(aa[this.value], 'opacity', 100, 10);               //大图显影
+
+                for (var k = 0; k < ali.length - 4; k++) {
+                    if (oul.offsetLeft == (-128 * k) && this.value == (k + 3)) {
+                        startMove(oul, 'left', oul.offsetLeft - 128, 5);
+                    }
+                }
+                for (var k = ali.length - 4; k > 0; k--) {
+                    if (oul.offsetLeft == (-128 * k) && this.value == k) {
+                        startMove(oul, 'left', oul.offsetLeft + 128, 5);
+                    }
+                }
+            }
+        }
+
+        // 点击左右按钮切换图片
+        var nextbtn = document.getElementById('small-next');
+        var prevbtn = document.getElementById('small-prev');
+        //向右
+        nextbtn.onclick = function () {
+            for (var i = 0; i < ali.length; i++) {
+                if (ali[i].className == 'cur') {      //判断焦点位置
+                    ali[i].className = '';           //取消所有焦点
+                    if (i == ali.length - 1) {
+                        var i = ali.length - 1;
+                        ali[i].setAttribute("class", "cur");
+
+                    } else {
+                        var i = i + 1;
+                        ali[i].setAttribute("class", "cur");
+                    }
+                }
+                if (ali[i].className == 'cur') {
+                    for (var p = 0; p < aa.length; p++) {
+                        aa[p].style.display = 'none';
+                        aa[p].style.opacity = '0';                      //大图显影
+                    }
+                    aa[i].style.display = 'block';
+                    startMove(aa[i], 'opacity', 100, 10);                //大图显影
+                }
+            }
+            //点击右图改变图片位置
+            for (var t = 0; t < ali.length; t++) {
+                if (ali[t].className == 'cur') {
+                    var p = t;
+                }
+            }
+            var a = ali.length;
+            for (var i = 3; i < a - 1; i++) {
+                if (p == i) {
+                    startMove(oul, 'left', (-128) * (i - 2), 5);
+                }
+            }
+        }
+        //向左
+        prevbtn.onclick = function () {
+            for (var i = 0; i < ali.length; i++) {
+                if (ali[i].className == 'cur') {
+                    ali[i].className = '';
+                    if (i == 0) {
+                        ali[0].setAttribute("class", "cur");
+                    } else {
+                        var i = i - 1;
+                        ali[i].setAttribute("class", "cur");
+                    }
+                }
+                if (ali[i].className == 'cur') {
+                    for (var p = 0; p < aa.length; p++) {
+                        aa[p].style.display = 'none';
+                        aa[p].style.opacity = '0';                     //大图显影
+                    }
+                    aa[i].style.display = 'block';
+                    startMove(aa[i], 'opacity', 100, 10);                //大图显影
+                }
+            }
+            //改变图片位置
+            for (var t = 0; t < ali.length; t++) {
+                if (ali[t].className == 'cur') {
+                    var p = t;
+                }
+            }
+            var a = ali.length;
+            for (var i = a - 4; i >= 1; i--) {
+                if (p == i) {
+                    startMove(oul, 'left', (-128) * (i - 1), 5);
+                }
+            }
+        }
+    }
+</script> {/block}

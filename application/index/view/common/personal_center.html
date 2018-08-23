@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="__ROOT__/static/img/logo.png" type="image/x-icon" />
+    <title>安租客-个人中心</title>
+    <!-- Bootstrap jQuery -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="__CSS__/pc_center.css">
+</head>
+
+<body style="background:#f1f1f1">
+    <div class="pc_nav">
+        <div class="pc_nav_title">
+            <p class="anzuke">
+                <a href="{$home_url}" class="a_anzuke">安租客</a> | 个人中心</p>
+            <a href="{$logout}" class="logout">
+                <span class="fa fa-power-off"></span> 退出</a>
+        </div>
+    </div>
+    <div class="hello" style="background:url(__ROOT__/static/img/pc_hello.png);width: 100%;height: 100px;">
+        <div class="pc_nav_title">
+            <p class="p_hello">你好呀！</p>
+        </div>
+    </div>
+    <div class="container">
+        <div class="left_nav">
+            <a href="{$user_message}" class="left_a" id="item1">
+                <span class="fa fa-user icon" id="icon_user"></span>个人资料</a>
+            <a href="{$user_sell}" class="left_a" id="item2">
+                <span class="fa fa-home icon" id="icon_home"></span>当房东</a>
+            <a href="{:url('index/index/collection')}" class="left_a" id="item3">
+                <span class="fa fa-star icon" id="icon_star"></span>收藏夹</a>
+            <a href="" class="left_a" id="item4">
+                <span class="fa fa-clock-o icon" id="icon_time"></span>浏览记录</a>
+            <a href="{:url('index/index/delete_history')}" class="left_a" id="item5">
+                <span class="fa fa-trash icon" id="icon_trash"></span>回收站</a>
+        </div>
+        {block name="user_info"} {/block} {block name="user_sell"} {/block}
+    </div>
+    <div id="footer">
+        @Designed by two handsome boys & three beautiful girls
+    </div>
+</body>
+<script>
+    var window_height = document.body.clientHeight;
+    if(window_height<550){
+        $("#footer").css("bottom","0px");
+    }
+</script>
+{block name='script'} 
+
+{/block}
+
+</html>

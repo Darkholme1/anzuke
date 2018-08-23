@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="icon" href="__ROOT__/static/img/logo.png" type="image/x-icon" />
+        <title>多图上传</title>
+        <!-- Bootstrap jQuery -->
+        <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#upBox{
+				text-align: center;
+				width:500px;
+				padding: 20px;
+				border: 1px solid #666;
+				margin: auto;
+				margin-top: 150px;
+				margin-bottom: 200px;
+				position: relative;
+				border-radius: 10px;
+			}
+			#inputBox{
+				width: 100%;
+				height: 40px;
+				border: 1px solid cornflowerblue;
+				color: cornflowerblue;
+				border-radius: 20px;
+				position: relative;
+				text-align: center;
+				line-height: 40px;
+				overflow: hidden;
+				font-size: 16px;
+			}
+			#inputBox input{
+				width: 114%;
+				height: 40px;
+				opacity: 0;
+				cursor: pointer;
+				position: absolute;
+				top: 0;
+				left: -14%;
+				
+			}
+			#imgBox{
+				text-align: left;
+			}
+			.imgContainer{
+				display: inline-block;
+				width: 32%;
+				height: 150px;
+				margin-left: 1%;
+				border: 1px solid #666666;
+				position: relative;
+				margin-top: 30px;
+				box-sizing: border-box;
+			}
+			.imgContainer img{
+				width: 100%;
+				height: 150px;
+				cursor: pointer;
+			}
+			.imgContainer p{
+				position: absolute;
+				bottom: -1px;
+				left: 0;
+				width: 100%;
+				height: 30px;
+				background: black;
+				text-align: center;
+				line-height: 30px;
+				color: white;
+				font-size: 16px;
+				font-weight: bold;
+				cursor: pointer;
+				display: none;
+			}
+			.imgContainer:hover p{
+				display: block;
+			}
+			#btn{
+				display: inline-block;
+				text-align: center;
+				line-height: 30px;
+				outline: none;
+				width: 100px;
+				height: 30px;
+				background: cornflowerblue;
+				border: 1px solid cornflowerblue;
+				color: white;
+				cursor: pointer;
+				margin-top: 30px;
+				border-radius: 5px;
+            }
+            #btn:hover{
+                text-decoration: none;
+            }
+		</style>
+	</head>
+	<body>
+		<div style="width: 100%;height: 100vh;position: relative;">
+			<form id="upBox" action="{$do}" method="post" enctype="multipart/form-data">
+				 <div id="inputBox"><input type="file" name="photo[]" title="请选择图片" id="file" multiple accept="image/*" />点击选择图片</div>
+			     <div id="imgBox"></div>
+				 <a id="btn">上传</a>
+			</form>
+		</div>
+		
+		<script src="__JS__/uploadImg.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			imgUpload({
+				inputId:'file', //input框id
+				imgBox:'imgBox', //图片容器id
+				buttonId:'btn', //提交按钮id
+				upUrl:'php/imgFile.php',  //提交地址
+				data:'file1', //参数名
+				num:"8"//上传个数
+            })
+            $("#btn").click(function(){
+                if($("#file").val()==""){
+                    alert("请选择图片");
+                }
+                else{
+                    $("#upBox").submit();
+                }
+            })
+        </script>
+		
+	</body>
+</html>

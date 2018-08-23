@@ -1,0 +1,86 @@
+{extend name='common/personal_center' /} {block name="user_info"}
+<div class="right_nav">
+    <ul class="tab_list">
+        <li>
+            <a class="cur" href="javascript:">个人资料</a>
+        </li>
+    </ul>
+    <div class="card">
+        <div class="card_title">
+            <i class="fa fa-user-o iconfont"></i>
+            <span>基本账号资料</span>
+        </div>
+        <ul class="card_list">
+            <li class="account">
+                <span class="key">账号</span>
+                <span class="value">{$username}</span>
+            </li>
+            <li class="name">
+                <span class="key">昵称</span>
+                <span class="value">{$nickname}</span>
+                <a href="javascript:" class="change_btn" id="name_btn" data-toggle="modal" data-target="#myModal">修改</a>
+            </li>
+            <li class="email">
+                <span class="key">邮箱</span>
+                <span class="value">{$email}</span>
+                <a href="javascript:" class="change_btn" id="email_btn" data-toggle="modal" data-target="#myModal">绑定</a>
+            </li>
+            <li class="phone">
+                <span class="key">手机</span>
+                <span class="value">{$phone}</span>
+                <a href="javascript:" class="change_btn" id="phone_btn">绑定</a>
+            </li>
+            <li class="password">
+                <span class="key">密码</span>
+                <a href="javascript:" class="change_btn" id="password_btn">修改</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" action="" method="post" id="form_edit">
+                    <div class="form-group">
+                        <div class="col-sm-10" style="width: 100%">
+                            <input type="text" class="form-control" id="input_edit" name="" placeholder="">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-success" id="btn_edit">提交更改</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal -->
+</div>
+{/block} {block name='script'}
+<script>
+    $("#item1").addClass("left_active");
+    $("#name_btn").click(function () {
+        $("#myModalLabel").text("修改昵称");
+        $("#input_edit").attr({
+            name: 'nickname',
+            placeholder: '请输入昵称'
+        })
+    })
+    $("#email_btn").click(function(){
+        $("#myModalLabel").text("绑定邮箱");
+        $("#input_edit").attr({
+            name: 'email',
+            placeholder: '请输入邮箱'
+        })
+    })
+    $("#btn_edit").click(function(){
+        $('#form_edit').submit();
+    })
+</script> {/block}

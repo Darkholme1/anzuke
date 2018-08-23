@@ -1,0 +1,98 @@
+{extend name='common/base' /}
+{block name='title'}
+安租客
+{/block}
+{block name='navright'}
+<li>
+    <a href="{$reg_url}">
+    <span class="glyphicon glyphicon-user"></span> 注册</a>
+</li>
+<li>
+    <a href="{$log_url}">
+    <span class="glyphicon glyphicon-log-in"></span> 登录</a>
+</li>
+{/block}
+{block name='house_list'}
+<ul class="nav nav-pills nav_sort">
+        <li id="item1">
+            <a href="{$home_url}">最新发布</a>
+        </li>
+        <li id="item2">
+            <a href="?id=2">租金</a>
+        </li>
+        <li id="item3">
+            <a href="?id=3">面积</a>
+        </li>
+    </ul>
+
+    <div class="sells">
+        {foreach $rs as $row}
+        <div class="one_sell">
+                <div class="photo_div">
+                    <img src="__ROOT__/uploads/null.png" alt="" class="photo" id="photo{$row->id}">
+                </div>
+                {foreach $rs_photo as $row_photo} {if condition='$row_photo->sell_id==$row->id'}
+                <script>
+                    $("#photo{$row->id}").attr("src", "__ROOT__/uploads/{$row_photo->time}/{$row_photo->file}")
+                </script> {/if} {/foreach}
+                <div class="one_sell_info">
+
+                    <a href="{$house_details}" class="one_sell_info_title">
+                        {if condition="$row->content==null"} {$row->address} {else /} {$row->content} {/if}
+                    </a>
+                    <p class="one_sell_info_details">
+                        <i></i>
+                        <i class="fa fa-columns icon1" aria-hidden="true"></i>
+                        <span>{$row->room}室{$row->hall}厅</span> |
+                        <span>{$row->area}平米</span> |
+                        <span>{$row->floor}/{$row->tall}层</span>
+
+                        <span class="fa fa-user-o"></span>{$row->seller}
+
+                    </p>
+                    <p class="one_sell_info_address">
+                        <i class="fa fa-building-o icon2" aria-hidden="true"></i>
+                        <span>{$row->address}</span>
+                    </p>
+                    <p class="one_sell_info_date">
+                        <i class="fa fa-eye icon3" aria-hidden="true"></i>
+                        <span>{$row->create_time}</span>
+                    </p>
+                </div>
+                <div class="price">
+                    <h1>
+                        <b>{$row->price}</b>
+                        <span class="yuanyue">元/月</span>
+                    </h1>
+                </div>
+            </div>
+        {/foreach}
+
+    </div>
+{/block}
+{block name='js'}
+    <script>
+        $("#btn_search").click(function () {
+            $("#form_search").submit();
+        })
+        $("#item{$id}").addClass("active");
+        var id = {$id};
+        var against = {$against};
+        if (id == 2) {
+            $("#item2 a").attr("href", "?id=2&against=2");
+            $("#item2 a").text("租金 ↑");
+        }
+        if (against == 2) {
+            $("#item2 a").attr("href", "?id=2");
+            $("#item2 a").text("租金 ↓");
+        }
+        if (id == 3) {
+            $("#item3 a").attr("href", "?id=3&against=3");
+            $("#item3 a").text("面积 ↑");
+        }
+        if (against == 3) {
+            $("#item3 a").attr("href", "?id=3");
+            $("#item3 a").text("面积 ↓");
+        }
+    </script>
+{/block}
